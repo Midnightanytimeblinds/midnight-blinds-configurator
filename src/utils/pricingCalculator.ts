@@ -80,30 +80,27 @@ export const calculatePrice = (config: Configuration): PricingBreakdown => {
   const heightIndex = findPriceIndex(heightMm, PRICING_TABLE.heightRanges);
   const widthIndex = findPriceIndex(widthMm, PRICING_TABLE.widthRanges);
   
-  let basePrice = 0;
+  let basePrice = 560; // Minimum base price
   
   // Check if dimensions are within our pricing table ranges
   if (heightIndex >= 0 && widthIndex >= 0) {
     basePrice = PRICING_TABLE.prices[heightIndex][widthIndex];
-  } else {
-    // Handle out of range dimensions - you might want to show an error or use a default
-    basePrice = 50; // Minimum price fallback
   }
   
-  // Add-ons (same as before)
+  // Add-ons (motorised is now included in base price)
   const measurementGuarantee = config.measurementGuarantee ? 40 : 0;
-  const motorised = config.controlType === 'motorised' ? 299 : 0;
+  const motorised = 0; // Now included in base price
   const additionalRemote = config.additionalRemote ? 129 : 0;
   const smartHub = (config.smartHubQuantity || 0) * 129;
   
   const total = basePrice + measurementGuarantee + motorised + additionalRemote + smartHub;
   
   return {
-    basePrice: Math.max(basePrice, 50), // Minimum base price
+    basePrice: Math.max(basePrice, 560), // Minimum base price of $560
     measurementGuarantee,
     motorised,
     additionalRemote,
     smartHub,
-    total: Math.max(total, 50), // Minimum total price
+    total: Math.max(total, 560), // Minimum total price of $560
   };
 };

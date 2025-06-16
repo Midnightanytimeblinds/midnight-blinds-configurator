@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -32,10 +31,9 @@ const STEPS = [
   { id: 1, title: 'Pick your colour', component: ColorStep },
   { id: 2, title: 'Mount style', component: MountStep },
   { id: 3, title: 'Measurements', component: MeasurementStep },
-  { id: 4, title: 'Control type', component: ControlStep },
-  { id: 5, title: 'Remote option', component: RemoteStep },
-  { id: 6, title: 'Optional accessories', component: AccessoriesStep },
-  { id: 7, title: 'Name your window', component: WindowNameStep },
+  { id: 4, title: 'Remote option', component: RemoteStep },
+  { id: 5, title: 'Optional accessories', component: AccessoriesStep },
+  { id: 6, title: 'Name your window', component: WindowNameStep },
 ];
 
 const ProductConfigurator = () => {
@@ -48,7 +46,7 @@ const ProductConfigurator = () => {
     width: 0,
     height: 0,
     measurementGuarantee: false,
-    controlType: '',
+    controlType: 'motorised', // Set motorised as default
     additionalRemote: false,
     smartHubQuantity: 0,
     windowName: '',
@@ -69,19 +67,16 @@ const ProductConfigurator = () => {
       case 2: return !!configuration.mountType;
       case 3: return configuration.width >= 530 && configuration.width <= 3000 && 
                      configuration.height >= 300 && configuration.height <= 3900;
-      case 4: return !!configuration.controlType;
-      case 5: return configuration.controlType !== 'motorised' || typeof configuration.additionalRemote === 'boolean';
-      case 6: return true; // Optional step
-      case 7: return !!configuration.windowName;
+      case 4: return typeof configuration.additionalRemote === 'boolean';
+      case 5: return true; // Optional step
+      case 6: return !!configuration.windowName;
       default: return false;
     }
   };
 
   const canProceed = isStepValid(currentStep);
   const isMotorised = configuration.controlType === 'motorised';
-  const visibleSteps = STEPS.filter(step => 
-    step.id !== 5 || isMotorised
-  );
+  const visibleSteps = STEPS; // Show all steps since we removed the conditional logic
 
   const currentStepIndex = visibleSteps.findIndex(step => step.id === currentStep);
   const progress = ((currentStepIndex + 1) / visibleSteps.length) * 100;
@@ -238,19 +233,13 @@ const ProductConfigurator = () => {
             {/* Price Breakdown */}
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Base blind ({configuration.width}mm × {configuration.height}mm)</span>
+                <span className="text-gray-600">Motorised blind ({configuration.width}mm × {configuration.height}mm)</span>
                 <span className="font-medium">${pricing.basePrice}</span>
               </div>
               {configuration.measurementGuarantee && (
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Measurement Guarantee</span>
                   <span className="font-medium">$40</span>
-                </div>
-              )}
-              {configuration.controlType === 'motorised' && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Motorised</span>
-                  <span className="font-medium">$299</span>
                 </div>
               )}
               {configuration.additionalRemote && (
