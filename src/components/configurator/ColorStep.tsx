@@ -16,47 +16,24 @@ const FRAME_COLORS = [
 ];
 
 const FABRIC_TYPES = [
-  { id: 'blockout', name: 'Blockout', description: 'Complete light blocking' },
-  { id: 'privacy', name: 'Privacy', description: 'Light filtering with privacy' },
-  { id: 'sheer', name: 'Sheer', description: 'Light filtering with view' },
+  { id: 'duo-blockout', name: 'DUO Blockout', description: 'Premium blockout with textured weave' },
+  { id: 'lereve-blockout', name: 'LeReve Blockout', description: 'Elegant blockout with woven pattern' },
 ];
 
 const FABRIC_COLORS = {
-  blockout: [
-    { id: 'blockout-white', name: 'White', color: '#FFFFFF', border: '#E5E7EB' },
-    { id: 'blockout-cream', name: 'Cream', color: '#F5F5DC' },
-    { id: 'blockout-beige', name: 'Beige', color: '#F5F5DC' },
-    { id: 'blockout-grey', name: 'Grey', color: '#808080' },
-    { id: 'blockout-charcoal', name: 'Charcoal', color: '#36454F' },
-    { id: 'blockout-black', name: 'Black', color: '#000000' },
-    { id: 'blockout-navy', name: 'Navy', color: '#000080' },
-    { id: 'blockout-brown', name: 'Brown', color: '#8B4513' },
-    { id: 'blockout-taupe', name: 'Taupe', color: '#D2B48C' },
-    { id: 'blockout-ivory', name: 'Ivory', color: '#FFFFF0' },
+  'duo-blockout': [
+    { id: 'duo-black', name: 'Charcoal Black', image: '/lovable-uploads/e8f5b3d8-5a8e-4b7a-9c2d-1e3f4a5b6c7d.png' },
+    { id: 'duo-dark-grey', name: 'Dark Grey', image: '/lovable-uploads/f9a6c4e9-6b9f-5c8a-ad3e-2f4g5h6i7j8k.png' },
+    { id: 'duo-medium-grey', name: 'Medium Grey', image: '/lovable-uploads/a1b2c3d4-7c0d-6d9b-be4f-3g5h6i7j8k9l.png' },
+    { id: 'duo-light-grey', name: 'Light Grey', image: '/lovable-uploads/b2c3d4e5-8d1e-7e0c-cf5g-4h6i7j8k9l0m.png' },
+    { id: 'duo-cream', name: 'Cream', image: '/lovable-uploads/c3d4e5f6-9e2f-8f1d-dg6h-5i7j8k9l0m1n.png' },
   ],
-  privacy: [
-    { id: 'privacy-white', name: 'White', color: '#FFFFFF', border: '#E5E7EB' },
-    { id: 'privacy-cream', name: 'Cream', color: '#F5F5DC' },
-    { id: 'privacy-light-grey', name: 'Light Grey', color: '#D3D3D3' },
-    { id: 'privacy-grey', name: 'Grey', color: '#808080' },
-    { id: 'privacy-charcoal', name: 'Charcoal', color: '#36454F' },
-    { id: 'privacy-beige', name: 'Beige', color: '#F5F5DC' },
-    { id: 'privacy-taupe', name: 'Taupe', color: '#D2B48C' },
-    { id: 'privacy-brown', name: 'Brown', color: '#8B4513' },
-    { id: 'privacy-sage', name: 'Sage', color: '#9CAF88' },
-    { id: 'privacy-linen', name: 'Linen', color: '#FAF0E6' },
-  ],
-  sheer: [
-    { id: 'sheer-white', name: 'White', color: '#FFFFFF', border: '#E5E7EB' },
-    { id: 'sheer-ivory', name: 'Ivory', color: '#FFFFF0' },
-    { id: 'sheer-cream', name: 'Cream', color: '#F5F5DC' },
-    { id: 'sheer-champagne', name: 'Champagne', color: '#F7E7CE' },
-    { id: 'sheer-light-grey', name: 'Light Grey', color: '#D3D3D3' },
-    { id: 'sheer-grey', name: 'Grey', color: '#808080' },
-    { id: 'sheer-linen', name: 'Linen', color: '#FAF0E6' },
-    { id: 'sheer-natural', name: 'Natural', color: '#F5F5DC' },
-    { id: 'sheer-pearl', name: 'Pearl', color: '#EAE0C8' },
-    { id: 'sheer-sand', name: 'Sand', color: '#F4A460' },
+  'lereve-blockout': [
+    { id: 'lereve-black', name: 'Deep Black', image: '/lovable-uploads/d4e5f6g7-0f3g-9g2e-eh7i-6j8k9l0m1n2o.png' },
+    { id: 'lereve-charcoal', name: 'Charcoal', image: '/lovable-uploads/e5f6g7h8-1g4h-0h3f-fi8j-7k9l0m1n2o3p.png' },
+    { id: 'lereve-dark-grey', name: 'Dark Grey', image: '/lovable-uploads/f6g7h8i9-2h5i-1i4g-gj9k-8l0m1n2o3p4q.png' },
+    { id: 'lereve-medium-grey', name: 'Medium Grey', image: '/lovable-uploads/g7h8i9j0-3i6j-2j5h-hk0l-9m1n2o3p4q5r.png' },
+    { id: 'lereve-light-grey', name: 'Light Grey', image: '/lovable-uploads/h8i9j0k1-4j7k-3k6i-il1m-0n2o3p4q5r6s.png' },
   ],
 };
 
@@ -103,8 +80,8 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
 
       {/* Fabric Type Selection */}
       <div>
-        <Label className="text-base font-semibold mb-4 block">Fabric Type</Label>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Label className="text-base font-semibold mb-4 block">Blockout Fabric</Label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {FABRIC_TYPES.map((type) => (
             <Card
               key={type.id}
@@ -142,13 +119,13 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
                 onClick={() => updateConfiguration({ fabricColor: fabric.id })}
               >
                 <CardContent className="p-3 text-center">
-                  <div
-                    className="w-10 h-10 rounded mx-auto mb-2 border"
-                    style={{
-                      backgroundColor: fabric.color,
-                      borderColor: fabric.border || fabric.color,
-                    }}
-                  />
+                  <div className="w-full h-16 rounded mb-2 border overflow-hidden">
+                    <img
+                      src={fabric.image}
+                      alt={fabric.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                   <span className="text-xs font-medium">{fabric.name}</span>
                 </CardContent>
               </Card>
