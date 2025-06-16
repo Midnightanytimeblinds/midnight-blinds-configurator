@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Plus } from 'lucide-react';
 
 interface ColorStepProps {
   configuration: any;
@@ -48,6 +49,7 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
   const selectedFabricColors = configuration.fabricType ? FABRIC_COLORS[configuration.fabricType as keyof typeof FABRIC_COLORS] : [];
 
   const handleFabricTypeChange = (fabricType: string) => {
+    console.log('Fabric type changing to:', fabricType);
     updateConfiguration({ 
       fabricType, 
       fabricColor: '' // Reset fabric color when type changes
@@ -60,6 +62,7 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
   };
 
   const handleFabricSelect = (fabricId: string) => {
+    console.log('Fabric color selected:', fabricId);
     updateConfiguration({ fabricColor: fabricId });
   };
 
@@ -123,6 +126,9 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
           <Label className="text-base font-semibold mb-4 block">
             {FABRIC_TYPES.find(t => t.id === configuration.fabricType)?.name} Colours
           </Label>
+          <div className="text-sm text-gray-600 mb-3">
+            Click a swatch to select it, or click the <Plus className="inline w-3 h-3" /> icon to view texture details
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {selectedFabricColors.map((fabric) => (
               <Card
@@ -135,7 +141,7 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
                 onClick={() => handleFabricSelect(fabric.id)}
               >
                 <CardContent className="p-3 text-center">
-                  <div className="w-full h-16 rounded mb-2 border overflow-hidden relative">
+                  <div className="w-full h-16 rounded mb-2 border overflow-hidden relative group">
                     <img
                       src={fabric.image}
                       alt={fabric.name}
@@ -143,12 +149,10 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
                     />
                     <button
                       onClick={(e) => handleSwatchClick(fabric, e)}
-                      className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center"
-                      title="Click to enlarge"
+                      className="absolute top-1 right-1 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm"
+                      title="View texture details"
                     >
-                      <span className="text-white text-xs opacity-0 hover:opacity-100 transition-opacity">
-                        🔍
-                      </span>
+                      <Plus className="w-3 h-3 text-gray-700" />
                     </button>
                   </div>
                   <span className="text-xs font-medium">{fabric.name}</span>
