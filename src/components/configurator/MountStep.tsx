@@ -11,14 +11,14 @@ interface MountStepProps {
 const MOUNT_OPTIONS = [
   {
     id: 'inside',
-    title: 'Inside Mount',
+    title: 'Reveal Fit',
     description: 'Blind fits inside the window frame',
     details: 'Perfect for windows with deep frames. Provides a clean, built-in look.',
     illustration: '🪟',
   },
   {
     id: 'outside',
-    title: 'Outside Mount',
+    title: 'Face Fit',
     description: 'Blind mounts on the wall above the window',
     details: 'Great for shallow frames or when you want maximum light blocking.',
     illustration: '🏠',
@@ -57,11 +57,15 @@ const MountStep = ({ configuration, updateConfiguration }: MountStepProps) => {
       {/* Educational content */}
       <div className="bg-blue-50 rounded-lg p-4">
         <h3 className="font-semibold text-blue-900 mb-2">💡 Mounting Tips</h3>
-        <ul className="text-sm text-blue-800 space-y-1">
-          <li>• Inside mounts require at least 2.5cm frame depth</li>
-          <li>• Outside mounts provide better light blocking</li>
+        <ul className="text-sm text-blue-800 space-y-1 mb-3">
+          <li>• Reveal fit requires at least 50mm frame depth</li>
+          <li>• Face fit requires at least 30mm of flat trim space around the window</li>
           <li>• Consider your window frame style and personal preference</li>
         </ul>
+        <p className="text-sm text-blue-800">
+          Need help measuring? See our 
+          <a href="#" className="underline font-medium"> measuring guide</a>.
+        </p>
       </div>
     </div>
   );
