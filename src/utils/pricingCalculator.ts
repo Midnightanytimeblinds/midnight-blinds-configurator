@@ -6,6 +6,7 @@ interface Configuration {
   controlType: string;
   additionalRemote: boolean;
   smartHubQuantity: number;
+  fabricType: string;
 }
 
 interface PricingBreakdown {
@@ -17,13 +18,23 @@ interface PricingBreakdown {
   total: number;
 }
 
+// Pricing rates from your data
+const FABRIC_RATES = {
+  blockout: 0.000042,
+  privacy: 0.000038,
+  sheer: 0.000035,
+};
+
 export const calculatePrice = (config: Configuration): PricingBreakdown => {
   // Convert dimensions to millimeters for calculation
   const widthMm = (config.width?.cm || 0) * 10 + (config.width?.mm || 0);
   const heightMm = (config.height?.cm || 0) * 10 + (config.height?.mm || 0);
   
+  // Get fabric rate based on type
+  const fabricRate = FABRIC_RATES[config.fabricType as keyof typeof FABRIC_RATES] || FABRIC_RATES.blockout;
+  
   // Base price calculation: width × height × rate
-  const basePrice = Math.round((widthMm * heightMm * 0.000042) * 100) / 100;
+  const basePrice = Math.round((widthMm * heightMm * fabricRate) * 100) / 100;
   
   // Add-ons
   const measurementGuarantee = config.measurementGuarantee ? 40 : 0;

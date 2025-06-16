@@ -16,6 +16,7 @@ import { calculatePrice } from '../utils/pricingCalculator';
 
 interface Configuration {
   frameColor: string;
+  fabricType: string;
   fabricColor: string;
   mountType: string;
   width: { cm: number; mm: number };
@@ -41,6 +42,7 @@ const ProductConfigurator = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [configuration, setConfiguration] = useState<Configuration>({
     frameColor: '',
+    fabricType: '',
     fabricColor: '',
     mountType: '',
     width: { cm: 0, mm: 0 },
@@ -63,11 +65,11 @@ const ProductConfigurator = () => {
 
   const isStepValid = (step: number): boolean => {
     switch (step) {
-      case 1: return configuration.frameColor && configuration.fabricColor;
+      case 1: return configuration.frameColor && configuration.fabricType && configuration.fabricColor;
       case 2: return !!configuration.mountType;
       case 3: return configuration.width.cm > 0 && configuration.height.cm > 0;
       case 4: return !!configuration.controlType;
-      case 5: return configuration.controlType !== 'motorised' || configuration.additionalRemote !== undefined;
+      case 5: return configuration.controlType !== 'motorised' || typeof configuration.additionalRemote === 'boolean';
       case 6: return true; // Optional step
       case 7: return !!configuration.windowName;
       default: return false;
@@ -102,6 +104,7 @@ const ProductConfigurator = () => {
   const handleAddToCart = () => {
     // Prepare line item properties for Shopify
     const lineItemProperties = {
+      'Fabric Type': configuration.fabricType,
       'Fabric Colour': configuration.fabricColor,
       'Frame Colour': configuration.frameColor,
       'Mount Type': configuration.mountType,
@@ -195,6 +198,39 @@ const ProductConfigurator = () => {
             <CardTitle className="text-lg text-gray-800">Order Summary</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* Visual Preview */}
+            {(configuration.frameColor || configuration.fabricColor) && (
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-sm mb-3">Your Selection</h3>
+                <div className="flex items-center space-x-3">
+                  {configuration.frameColor && (
+                    <div className="text-center">
+                      <div className="w-8 h-8 rounded border-2 mx-auto mb-1" style={{
+                        backgroundColor: configuration.frameColor === 'white' ? '#FFFFFF' : 
+                                       configuration.frameColor === 'black' ? '#000000' :
+                                       configuration.frameColor === 'silver' ? '#C0C0C0' : '#CD7F32',
+                        borderColor: configuration.frameColor === 'white' ? '#E5E7EB' : 'transparent'
+                      }} />
+                      <span className="text-xs text-gray-600">Frame</span>
+                    </div>
+                  )}
+                  {configuration.fabricType && configuration.fabricColor && (
+                    <div className="text-center flex-1">
+                      <div className="w-12 h-8 rounded border mx-auto mb-1" style={{
+                        backgroundColor: configuration.fabricColor.includes('white') ? '#FFFFFF' :
+                                       configuration.fabricColor.includes('black') ? '#000000' :
+                                       configuration.fabricColor.includes('grey') ? '#808080' :
+                                       configuration.fabricColor.includes('cream') ? '#F5F5DC' :
+                                       configuration.fabricColor.includes('blue') ? '#2C3E50' : '#D1D5DB',
+                        borderColor: configuration.fabricColor.includes('white') ? '#E5E7EB' : 'transparent'
+                      }} />
+                      <span className="text-xs text-gray-600">{configuration.fabricType}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Base blind ({configuration.width.cm + configuration.width.mm/10}cm × {configuration.height.cm + configuration.height.mm/10}cm)</span>
