@@ -13,6 +13,8 @@ import RemoteStep from './configurator/RemoteStep';
 import AccessoriesStep from './configurator/AccessoriesStep';
 import WindowNameStep from './configurator/WindowNameStep';
 import { calculatePrice } from '../utils/pricingCalculator';
+import { addToShopifyCart } from '../utils/shopifyCart';
+import { shopifyConfig } from '../config/shopify';
 
 interface Configuration {
   frameColor: string;
@@ -53,14 +55,15 @@ const ProductConfigurator = () => {
     windowName: '',
   });
   const [pricing, setPricing] = useState(calculatePrice(configuration));
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   useEffect(() => {
     setPricing(calculatePrice(configuration));
   }, [configuration]);
 
   const handleBackToProduct = () => {
-    // Navigate back to Shopify product page
-    window.history.back();
+    // Navigate back to Shopify product page using configured URL
+    window.location.href = shopifyConfig.productPageUrl;
   };
 
   const updateConfiguration = (updates: Partial<Configuration>) => {
@@ -103,25 +106,22 @@ const ProductConfigurator = () => {
     }
   };
 
-  const handleAddToCart = () => {
-    // Prepare line item properties for Shopify
-    const lineItemProperties = {
-      'Fabric Type': configuration.fabricType,
-      'Fabric Colour': configuration.fabricColor,
-      'Frame Colour': configuration.frameColor,
-      'Mount Type': configuration.mountType,
-      'Width': `${configuration.width}mm`,
-      'Height': `${configuration.height}mm`,
-      'Measurement Guarantee': configuration.measurementGuarantee ? 'Yes' : 'No',
-      'Control Type': configuration.controlType,
-      'Remote': configuration.additionalRemote ? 'Yes' : 'No',
-      'SmartHub': configuration.smartHubQuantity.toString(),
-      'Window Name': configuration.windowName,
-      '_calculated_price': `$${pricing.total}`,
-    };
-
-    console.log('Adding to cart:', lineItemProperties);
-    // Here you would integrate with Shopify's cart API
+  const handleAddToCart = async () => {
+    if (!canProceed) return;
+    
+    setIsAddingToCart(true);
+    
+    try {
+      await addToShopifyCart(configuration, pricing);
+      
+      // Redirect to cart page after successful addition
+      window.location.href = '/cart';
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      alert('There was an error adding your blind to the cart. Please try again.');
+    } finally {
+      setIsAddingToCart(false);
+    }
   };
 
   const CurrentStepComponent = visibleSteps.find(step => step.id === currentStep)?.component;
@@ -191,10 +191,10 @@ const ProductConfigurator = () => {
           {isLastStep ? (
             <Button
               onClick={handleAddToCart}
-              disabled={!canProceed}
+              disabled={!canProceed || isAddingToCart}
               className="px-8 py-3 text-base bg-blue-600 hover:bg-blue-700 text-white"
             >
-              Add to Cart - ${pricing.total}
+              {isAddingToCart ? 'Adding to Cart...' : `Add to Cart - $${pricing.total}`}
             </Button>
           ) : (
             <Button
