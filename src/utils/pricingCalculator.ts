@@ -18,11 +18,11 @@ interface PricingBreakdown {
   total: number;
 }
 
-// Pricing rates from your data
+// Updated pricing rates based on the provided data
 const FABRIC_RATES = {
-  blockout: 0.000042,
-  privacy: 0.000038,
-  sheer: 0.000035,
+  blockout: 0.000039,
+  privacy: 0.000035,
+  sheer: 0.000031,
 };
 
 export const calculatePrice = (config: Configuration): PricingBreakdown => {

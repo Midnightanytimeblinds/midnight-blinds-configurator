@@ -130,36 +130,39 @@ const ProductConfigurator = () => {
       {/* Main Configurator */}
       <div className="lg:col-span-2 space-y-6">
         {/* Progress Header */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-2xl font-bold text-gray-900">
-                Custom Blind Configurator
-              </CardTitle>
-              <Badge variant="secondary" className="text-sm">
-                Step {currentStepIndex + 1} of {visibleSteps.length}
-              </Badge>
-            </div>
-            <Progress value={progress} className="w-full h-2" />
-          </CardHeader>
-        </Card>
+        <div className="bg-white rounded-lg border shadow-sm p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Configure Your Blind
+            </h2>
+            <Badge variant="secondary" className="text-sm bg-blue-100 text-blue-800">
+              Step {currentStepIndex + 1} of {visibleSteps.length}
+            </Badge>
+          </div>
+          <Progress value={progress} className="w-full h-2 bg-gray-200" />
+        </div>
 
         {/* Current Step */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl text-gray-800">
-              {visibleSteps[currentStepIndex]?.title}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+        <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
+          <div className="bg-gray-50 px-6 py-4 border-b">
+            <div className="flex items-center space-x-3">
+              <div className="bg-black text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+                {currentStepIndex + 1}
+              </div>
+              <h3 className="text-xl font-bold text-gray-900">
+                {visibleSteps[currentStepIndex]?.title}
+              </h3>
+            </div>
+          </div>
+          <div className="p-6">
             {CurrentStepComponent && (
               <CurrentStepComponent
                 configuration={configuration}
                 updateConfiguration={updateConfiguration}
               />
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Navigation */}
         <div className="flex justify-between">
@@ -167,15 +170,15 @@ const ProductConfigurator = () => {
             variant="outline"
             onClick={handlePrevious}
             disabled={currentStepIndex === 0}
-            className="px-6"
+            className="px-8 py-3 text-base border-gray-300"
           >
-            Previous
+            ← Back
           </Button>
           {isLastStep ? (
             <Button
               onClick={handleAddToCart}
               disabled={!canProceed}
-              className="px-8 bg-blue-600 hover:bg-blue-700"
+              className="px-8 py-3 text-base bg-blue-600 hover:bg-blue-700 text-white"
             >
               Add to Cart - ${pricing.total}
             </Button>
@@ -183,9 +186,9 @@ const ProductConfigurator = () => {
             <Button
               onClick={handleNext}
               disabled={!canProceed}
-              className="px-6 bg-blue-600 hover:bg-blue-700"
+              className="px-8 py-3 text-base bg-blue-600 hover:bg-blue-700 text-white"
             >
-              Next Step
+              Continue →
             </Button>
           )}
         </div>
@@ -193,30 +196,30 @@ const ProductConfigurator = () => {
 
       {/* Live Pricing Sidebar */}
       <div className="lg:col-span-1">
-        <Card className="sticky top-6">
-          <CardHeader>
-            <CardTitle className="text-lg text-gray-800">Order Summary</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        <div className="bg-white rounded-lg border shadow-sm sticky top-6">
+          <div className="p-6 border-b">
+            <h3 className="text-lg font-bold text-gray-900">Order Summary</h3>
+          </div>
+          <div className="p-6 space-y-6">
             {/* Visual Preview */}
             {(configuration.frameColor || configuration.fabricColor) && (
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-sm mb-3">Your Selection</h3>
-                <div className="flex items-center space-x-3">
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h4 className="font-semibold text-sm mb-3 text-gray-700">Your Selection</h4>
+                <div className="flex items-center space-x-4">
                   {configuration.frameColor && (
                     <div className="text-center">
-                      <div className="w-8 h-8 rounded border-2 mx-auto mb-1" style={{
+                      <div className="w-10 h-10 rounded border-2 mx-auto mb-2 shadow-sm" style={{
                         backgroundColor: configuration.frameColor === 'white' ? '#FFFFFF' : 
                                        configuration.frameColor === 'black' ? '#000000' :
                                        configuration.frameColor === 'silver' ? '#C0C0C0' : '#CD7F32',
                         borderColor: configuration.frameColor === 'white' ? '#E5E7EB' : 'transparent'
                       }} />
-                      <span className="text-xs text-gray-600">Frame</span>
+                      <span className="text-xs text-gray-600 font-medium">Frame</span>
                     </div>
                   )}
                   {configuration.fabricType && configuration.fabricColor && (
                     <div className="text-center flex-1">
-                      <div className="w-12 h-8 rounded border mx-auto mb-1" style={{
+                      <div className="w-16 h-10 rounded border mx-auto mb-2 shadow-sm" style={{
                         backgroundColor: configuration.fabricColor.includes('white') ? '#FFFFFF' :
                                        configuration.fabricColor.includes('black') ? '#000000' :
                                        configuration.fabricColor.includes('grey') ? '#808080' :
@@ -224,55 +227,59 @@ const ProductConfigurator = () => {
                                        configuration.fabricColor.includes('blue') ? '#2C3E50' : '#D1D5DB',
                         borderColor: configuration.fabricColor.includes('white') ? '#E5E7EB' : 'transparent'
                       }} />
-                      <span className="text-xs text-gray-600">{configuration.fabricType}</span>
+                      <span className="text-xs text-gray-600 font-medium">{configuration.fabricType}</span>
                     </div>
                   )}
                 </div>
               </div>
             )}
 
-            <div className="space-y-2">
+            {/* Price Breakdown */}
+            <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span>Base blind ({configuration.width.cm + configuration.width.mm/10}cm × {configuration.height.cm + configuration.height.mm/10}cm)</span>
-                <span>${pricing.basePrice}</span>
+                <span className="text-gray-600">Base blind ({Math.round((configuration.width?.cm || 0) * 10 + (configuration.width?.mm || 0))}mm × {Math.round((configuration.height?.cm || 0) * 10 + (configuration.height?.mm || 0))}mm)</span>
+                <span className="font-medium">${pricing.basePrice}</span>
               </div>
               {configuration.measurementGuarantee && (
                 <div className="flex justify-between text-sm">
-                  <span>Measurement Guarantee</span>
-                  <span>$40</span>
+                  <span className="text-gray-600">Measurement Guarantee</span>
+                  <span className="font-medium">$40</span>
                 </div>
               )}
               {configuration.controlType === 'motorised' && (
                 <div className="flex justify-between text-sm">
-                  <span>Motorised</span>
-                  <span>$299</span>
+                  <span className="text-gray-600">Motorised</span>
+                  <span className="font-medium">$299</span>
                 </div>
               )}
               {configuration.additionalRemote && (
                 <div className="flex justify-between text-sm">
-                  <span>Additional Remote</span>
-                  <span>$129</span>
+                  <span className="text-gray-600">Additional Remote</span>
+                  <span className="font-medium">$129</span>
                 </div>
               )}
               {configuration.smartHubQuantity > 0 && (
                 <div className="flex justify-between text-sm">
-                  <span>SmartHub × {configuration.smartHubQuantity}</span>
-                  <span>${129 * configuration.smartHubQuantity}</span>
+                  <span className="text-gray-600">SmartHub × {configuration.smartHubQuantity}</span>
+                  <span className="font-medium">${129 * configuration.smartHubQuantity}</span>
                 </div>
               )}
             </div>
+            
             <Separator />
-            <div className="flex justify-between font-semibold text-lg">
-              <span>Total</span>
-              <span>${pricing.total}</span>
+            
+            <div className="flex justify-between items-center">
+              <span className="text-lg font-bold text-gray-900">Total</span>
+              <span className="text-2xl font-bold text-blue-600">${pricing.total}</span>
             </div>
+            
             {configuration.windowName && (
-              <div className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                Window: {configuration.windowName}
+              <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
+                <span className="font-medium">Window:</span> {configuration.windowName}
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
