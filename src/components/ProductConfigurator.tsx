@@ -243,6 +243,18 @@ const ProductConfigurator = () => {
         {/* Live Pricing Sidebar */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-lg border shadow-sm lg:sticky lg:top-6">
+            {/* Product Preview Image */}
+            <div className="p-6 border-b">
+              <h3 className="text-lg font-bold text-gray-900 mb-4">Product Preview</h3>
+              <div className="aspect-square rounded-lg overflow-hidden bg-gray-50">
+                <img 
+                  src="/lovable-uploads/268e67c9-4759-42ed-9624-5684dab2d584.png" 
+                  alt="Custom Blind Preview"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
             <div className="p-6 border-b">
               <h3 className="text-lg font-bold text-gray-900">Order Summary</h3>
             </div>
