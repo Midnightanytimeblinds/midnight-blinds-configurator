@@ -159,179 +159,181 @@ const ProductConfigurator = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {/* Main Configurator */}
-      <div className="lg:col-span-2 space-y-6">
-        {/* Back Button */}
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            onClick={handleBackToProduct}
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 p-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back to Product</span>
-          </Button>
-        </div>
-
-        {/* Progress Header */}
-        <div className="bg-white rounded-lg border shadow-sm p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-gray-900">
-              Configure Your Blind
-            </h2>
-            <Badge variant="secondary" className="text-sm bg-blue-100 text-blue-800">
-              Step {currentStepIndex + 1} of {visibleSteps.length}
-            </Badge>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Configurator */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Back Button */}
+          <div className="flex items-center">
+            <Button
+              variant="ghost"
+              onClick={handleBackToProduct}
+              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 p-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Back to Product</span>
+            </Button>
           </div>
-          <Progress value={progress} className="w-full h-2 bg-gray-200" />
-        </div>
 
-        {/* Current Step */}
-        <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
-          <div className="bg-gray-50 px-6 py-4 border-b">
-            <div className="flex items-center space-x-3">
-              <div className="bg-black text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-                {currentStepIndex + 1}
+          {/* Progress Header */}
+          <div className="bg-white rounded-lg border shadow-sm p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-bold text-gray-900">
+                Configure Your Blind
+              </h2>
+              <Badge variant="secondary" className="text-sm bg-blue-100 text-blue-800">
+                Step {currentStepIndex + 1} of {visibleSteps.length}
+              </Badge>
+            </div>
+            <Progress value={progress} className="w-full h-2 bg-gray-200" />
+          </div>
+
+          {/* Current Step */}
+          <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
+            <div className="bg-gray-50 px-6 py-4 border-b">
+              <div className="flex items-center space-x-3">
+                <div className="bg-black text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+                  {currentStepIndex + 1}
+                </div>
+                <h3 className="text-xl font-bold text-gray-900">
+                  {visibleSteps[currentStepIndex]?.title}
+                </h3>
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
-                {visibleSteps[currentStepIndex]?.title}
-              </h3>
+            </div>
+            <div className="p-6">
+              {CurrentStepComponent && (
+                <CurrentStepComponent
+                  configuration={configuration}
+                  updateConfiguration={updateConfiguration}
+                />
+              )}
             </div>
           </div>
-          <div className="p-6">
-            {CurrentStepComponent && (
-              <CurrentStepComponent
-                configuration={configuration}
-                updateConfiguration={updateConfiguration}
-              />
+
+          {/* Navigation */}
+          <div className="flex justify-between">
+            <Button
+              variant="outline"
+              onClick={handlePrevious}
+              disabled={currentStepIndex === 0}
+              className="px-8 py-3 text-base border-gray-300"
+            >
+              ← Back
+            </Button>
+            {isLastStep ? (
+              <Button
+                onClick={handleAddToCart}
+                disabled={!canProceed || isAddingToCart}
+                className="px-8 py-3 text-base bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                {isAddingToCart ? 'Adding to Cart...' : `Add to Cart - $${pricing.total}`}
+              </Button>
+            ) : (
+              <Button
+                onClick={handleNext}
+                disabled={!canProceed}
+                className="px-8 py-3 text-base bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                Continue →
+              </Button>
             )}
           </div>
         </div>
 
-        {/* Navigation */}
-        <div className="flex justify-between">
-          <Button
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentStepIndex === 0}
-            className="px-8 py-3 text-base border-gray-300"
-          >
-            ← Back
-          </Button>
-          {isLastStep ? (
-            <Button
-              onClick={handleAddToCart}
-              disabled={!canProceed || isAddingToCart}
-              className="px-8 py-3 text-base bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              {isAddingToCart ? 'Adding to Cart...' : `Add to Cart - $${pricing.total}`}
-            </Button>
-          ) : (
-            <Button
-              onClick={handleNext}
-              disabled={!canProceed}
-              className="px-8 py-3 text-base bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              Continue →
-            </Button>
-          )}
-        </div>
-      </div>
-
-      {/* Live Pricing Sidebar */}
-      <div className="lg:col-span-1">
-        <div className="bg-white rounded-lg border shadow-sm sticky top-6">
-          <div className="p-6 border-b">
-            <h3 className="text-lg font-bold text-gray-900">Order Summary</h3>
-          </div>
-          <div className="p-6 space-y-6">
-            {/* Visual Preview */}
-            {(configuration.frameColor || configuration.fabricColor) && (
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="font-semibold text-sm mb-3 text-gray-700">Your Selection</h4>
-                <div className="flex items-center space-x-4">
-                  {configuration.frameColor && (
-                    <div className="text-center">
-                      <div className="w-10 h-10 rounded border-2 mx-auto mb-2 shadow-sm" style={{
-                        backgroundColor: configuration.frameColor === 'white' ? '#FFFFFF' : 
-                                       configuration.frameColor === 'black' ? '#000000' :
-                                       configuration.frameColor === 'silver' ? '#C0C0C0' : '#CD7F32',
-                        borderColor: configuration.frameColor === 'white' ? '#E5E7EB' : 'transparent'
-                      }} />
-                      <span className="text-xs text-gray-600 font-medium">Frame</span>
-                    </div>
-                  )}
-                  {configuration.fabricType && configuration.fabricColor && (() => {
-                    const fabricDetails = getFabricColorDetails();
-                    return (
-                      <div className="text-center flex-1">
-                        <div className="w-16 h-10 rounded border mx-auto mb-2 shadow-sm overflow-hidden">
-                          {fabricDetails ? (
-                            <img 
-                              src={fabricDetails.image} 
-                              alt={fabricDetails.name}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div style={{
-                              backgroundColor: configuration.fabricColor.includes('white') ? '#FFFFFF' :
+        {/* Live Pricing Sidebar */}
+        <div className="lg:col-span-1">
+          <div className="bg-white rounded-lg border shadow-sm lg:sticky lg:top-6">
+            <div className="p-6 border-b">
+              <h3 className="text-lg font-bold text-gray-900">Order Summary</h3>
+            </div>
+            <div className="p-6 space-y-6">
+              {/* Visual Preview */}
+              {(configuration.frameColor || configuration.fabricColor) && (
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-sm mb-3 text-gray-700">Your Selection</h4>
+                  <div className="flex items-center space-x-4">
+                    {configuration.frameColor && (
+                      <div className="text-center">
+                        <div className="w-10 h-10 rounded border-2 mx-auto mb-2 shadow-sm" style={{
+                          backgroundColor: configuration.frameColor === 'white' ? '#FFFFFF' : 
+                                         configuration.frameColor === 'black' ? '#000000' :
+                                         configuration.frameColor === 'silver' ? '#C0C0C0' : '#CD7F32',
+                          borderColor: configuration.frameColor === 'white' ? '#E5E7EB' : 'transparent'
+                        }} />
+                        <span className="text-xs text-gray-600 font-medium">Frame</span>
+                      </div>
+                    )}
+                    {configuration.fabricType && configuration.fabricColor && (() => {
+                      const fabricDetails = getFabricColorDetails();
+                      return (
+                        <div className="text-center flex-1">
+                          <div className="w-16 h-10 rounded border mx-auto mb-2 shadow-sm overflow-hidden">
+                            {fabricDetails ? (
+                              <img 
+                                src={fabricDetails.image} 
+                                alt={fabricDetails.name}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div style={{
+                                backgroundColor: configuration.fabricColor.includes('white') ? '#FFFFFF' :
                                              configuration.fabricColor.includes('black') ? '#000000' :
                                              configuration.fabricColor.includes('grey') ? '#808080' :
                                              configuration.fabricColor.includes('cream') ? '#F5F5DC' :
                                              configuration.fabricColor.includes('blue') ? '#2C3E50' : '#D1D5DB',
-                              borderColor: configuration.fabricColor.includes('white') ? '#E5E7EB' : 'transparent'
-                            }} className="w-full h-full" />
-                          )}
+                                borderColor: configuration.fabricColor.includes('white') ? '#E5E7EB' : 'transparent'
+                              }} className="w-full h-full" />
+                            )}
+                          </div>
+                          <span className="text-xs text-gray-600 font-medium">
+                            {getFabricColorDetails()?.name || configuration.fabricType}
+                          </span>
                         </div>
-                        <span className="text-xs text-gray-600 font-medium">
-                          {getFabricColorDetails()?.name || configuration.fabricType}
-                        </span>
-                      </div>
-                    );
-                  })()}
+                      );
+                    })()}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Price Breakdown */}
-            <div className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Motorised blind ({configuration.width}mm × {configuration.height}mm)</span>
-                <span className="font-medium">${pricing.basePrice}</span>
+              {/* Price Breakdown */}
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Motorised blind ({configuration.width}mm × {configuration.height}mm)</span>
+                  <span className="font-medium">${pricing.basePrice}</span>
+                </div>
+                {configuration.measurementGuarantee && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Measurement Guarantee</span>
+                    <span className="font-medium">$40</span>
+                  </div>
+                )}
+                {configuration.additionalRemote && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Additional Remote</span>
+                    <span className="font-medium">$129</span>
+                  </div>
+                )}
+                {configuration.smartHubQuantity > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">SmartHub × {configuration.smartHubQuantity}</span>
+                    <span className="font-medium">${129 * configuration.smartHubQuantity}</span>
+                  </div>
+                )}
               </div>
-              {configuration.measurementGuarantee && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Measurement Guarantee</span>
-                  <span className="font-medium">$40</span>
-                </div>
-              )}
-              {configuration.additionalRemote && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Additional Remote</span>
-                  <span className="font-medium">$129</span>
-                </div>
-              )}
-              {configuration.smartHubQuantity > 0 && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">SmartHub × {configuration.smartHubQuantity}</span>
-                  <span className="font-medium">${129 * configuration.smartHubQuantity}</span>
+              
+              <Separator />
+              
+              <div className="flex justify-between items-center">
+                <span className="text-lg font-bold text-gray-900">Total</span>
+                <span className="text-2xl font-bold text-blue-600">${pricing.total}</span>
+              </div>
+              
+              {configuration.windowName && (
+                <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
+                  <span className="font-medium">Window:</span> {configuration.windowName}
                 </div>
               )}
             </div>
-            
-            <Separator />
-            
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-bold text-gray-900">Total</span>
-              <span className="text-2xl font-bold text-blue-600">${pricing.total}</span>
-            </div>
-            
-            {configuration.windowName && (
-              <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-                <span className="font-medium">Window:</span> {configuration.windowName}
-              </div>
-            )}
           </div>
         </div>
       </div>
