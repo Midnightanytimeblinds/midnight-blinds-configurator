@@ -65,7 +65,7 @@ const ProductConfigurator = () => {
 
   const isStepValid = (step: number): boolean => {
     switch (step) {
-      case 1: return configuration.frameColor && configuration.fabricType && configuration.fabricColor;
+      case 1: return !!(configuration.frameColor && configuration.fabricType && configuration.fabricColor);
       case 2: return !!configuration.mountType;
       case 3: return configuration.width.cm > 0 && configuration.height.cm > 0;
       case 4: return !!configuration.controlType;
