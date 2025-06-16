@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -8,7 +9,7 @@ interface ColorStepProps {
 }
 
 const FRAME_COLORS = [
-  { id: 'black', name: 'Black', image: '/lovable-uploads/ffd77d8d-0bd1-443f-9a80-9b76254c2223.png' },
+  { id: 'black', name: 'Black', image: '/lovable-uploads/2f469a3c-1062-40bd-aacd-4e621fdb5388.png' },
   { id: 'white', name: 'White', image: '/lovable-uploads/ffd77d8d-0bd1-443f-9a80-9b76254c2223.png' },
   { id: 'silver', name: 'Silver', image: '/lovable-uploads/ffd77d8d-0bd1-443f-9a80-9b76254c2223.png' },
   { id: 'cream', name: 'Cream', image: '/lovable-uploads/ffd77d8d-0bd1-443f-9a80-9b76254c2223.png' },
