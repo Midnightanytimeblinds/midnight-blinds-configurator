@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface ColorStepProps {
   configuration: any;
@@ -43,6 +44,7 @@ const FABRIC_COLORS = {
 };
 
 const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
+  const [selectedSwatchForPreview, setSelectedSwatchForPreview] = useState<{ name: string; image: string } | null>(null);
   const selectedFabricColors = configuration.fabricType ? FABRIC_COLORS[configuration.fabricType as keyof typeof FABRIC_COLORS] : [];
 
   const handleFabricTypeChange = (fabricType: string) => {
@@ -50,6 +52,15 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
       fabricType, 
       fabricColor: '' // Reset fabric color when type changes
     });
+  };
+
+  const handleSwatchClick = (fabric: { name: string; image: string }, event: React.MouseEvent) => {
+    event.stopPropagation();
+    setSelectedSwatchForPreview(fabric);
+  };
+
+  const handleFabricSelect = (fabricId: string) => {
+    updateConfiguration({ fabricColor: fabricId });
   };
 
   return (
@@ -121,15 +132,24 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
                     ? 'ring-2 ring-blue-500 shadow-md'
                     : 'hover:shadow-sm'
                 }`}
-                onClick={() => updateConfiguration({ fabricColor: fabric.id })}
+                onClick={() => handleFabricSelect(fabric.id)}
               >
                 <CardContent className="p-3 text-center">
-                  <div className="w-full h-16 rounded mb-2 border overflow-hidden">
+                  <div className="w-full h-16 rounded mb-2 border overflow-hidden relative">
                     <img
                       src={fabric.image}
                       alt={fabric.name}
                       className="w-full h-full object-cover"
                     />
+                    <button
+                      onClick={(e) => handleSwatchClick(fabric, e)}
+                      className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center"
+                      title="Click to enlarge"
+                    >
+                      <span className="text-white text-xs opacity-0 hover:opacity-100 transition-opacity">
+                        🔍
+                      </span>
+                    </button>
                   </div>
                   <span className="text-xs font-medium">{fabric.name}</span>
                 </CardContent>
@@ -138,6 +158,22 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
           </div>
         </div>
       )}
+
+      {/* Swatch Preview Modal */}
+      <Dialog open={!!selectedSwatchForPreview} onOpenChange={() => setSelectedSwatchForPreview(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>{selectedSwatchForPreview?.name} Fabric Detail</DialogTitle>
+          </DialogHeader>
+          <div className="flex justify-center">
+            <img
+              src={selectedSwatchForPreview?.image}
+              alt={selectedSwatchForPreview?.name}
+              className="max-w-full max-h-96 object-contain rounded-lg border"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
