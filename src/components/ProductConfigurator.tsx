@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { ArrowLeft } from 'lucide-react';
 import ColorStep from './configurator/ColorStep';
 import MountStep from './configurator/MountStep';
 import MeasurementStep from './configurator/MeasurementStep';
@@ -56,6 +57,11 @@ const ProductConfigurator = () => {
   useEffect(() => {
     setPricing(calculatePrice(configuration));
   }, [configuration]);
+
+  const handleBackToProduct = () => {
+    // Navigate back to Shopify product page
+    window.history.back();
+  };
 
   const updateConfiguration = (updates: Partial<Configuration>) => {
     setConfiguration(prev => ({ ...prev, ...updates }));
@@ -125,6 +131,18 @@ const ProductConfigurator = () => {
     <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Main Configurator */}
       <div className="lg:col-span-2 space-y-6">
+        {/* Back Button */}
+        <div className="flex items-center">
+          <Button
+            variant="ghost"
+            onClick={handleBackToProduct}
+            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 p-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Back to Product</span>
+          </Button>
+        </div>
+
         {/* Progress Header */}
         <div className="bg-white rounded-lg border shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
