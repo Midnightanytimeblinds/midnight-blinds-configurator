@@ -153,13 +153,7 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
                       alt={fabric.name}
                       className="w-full h-full object-cover object-center"
                       style={{ 
-                        imageRendering: 'pixelated',
-                        msInterpolationMode: 'nearest-neighbor'
-                      }}
-                      onLoad={(e) => {
-                        // Ensure image displays properly once loaded
-                        const img = e.target as HTMLImageElement;
-                        img.style.imageRendering = 'auto';
+                        imageRendering: 'auto'
                       }}
                     />
                     <button
@@ -198,4 +192,3 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
 };
 
 export default ColorStep;
-
