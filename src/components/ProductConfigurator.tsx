@@ -19,8 +19,8 @@ interface Configuration {
   fabricType: string;
   fabricColor: string;
   mountType: string;
-  width: { cm: number; mm: number };
-  height: { cm: number; mm: number };
+  width: number; // in mm
+  height: number; // in mm
   measurementGuarantee: boolean;
   controlType: string;
   additionalRemote: boolean;
@@ -45,8 +45,8 @@ const ProductConfigurator = () => {
     fabricType: '',
     fabricColor: '',
     mountType: '',
-    width: { cm: 0, mm: 0 },
-    height: { cm: 0, mm: 0 },
+    width: 0,
+    height: 0,
     measurementGuarantee: false,
     controlType: '',
     additionalRemote: false,
@@ -67,7 +67,8 @@ const ProductConfigurator = () => {
     switch (step) {
       case 1: return !!(configuration.frameColor && configuration.fabricType && configuration.fabricColor);
       case 2: return !!configuration.mountType;
-      case 3: return configuration.width.cm > 0 && configuration.height.cm > 0;
+      case 3: return configuration.width >= 530 && configuration.width <= 3000 && 
+                     configuration.height >= 300 && configuration.height <= 3900;
       case 4: return !!configuration.controlType;
       case 5: return configuration.controlType !== 'motorised' || typeof configuration.additionalRemote === 'boolean';
       case 6: return true; // Optional step
@@ -108,8 +109,8 @@ const ProductConfigurator = () => {
       'Fabric Colour': configuration.fabricColor,
       'Frame Colour': configuration.frameColor,
       'Mount Type': configuration.mountType,
-      'Width': `${configuration.width.cm}cm ${configuration.width.mm}mm`,
-      'Height': `${configuration.height.cm}cm ${configuration.height.mm}mm`,
+      'Width': `${configuration.width}mm`,
+      'Height': `${configuration.height}mm`,
       'Measurement Guarantee': configuration.measurementGuarantee ? 'Yes' : 'No',
       'Control Type': configuration.controlType,
       'Remote': configuration.additionalRemote ? 'Yes' : 'No',
@@ -237,7 +238,7 @@ const ProductConfigurator = () => {
             {/* Price Breakdown */}
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Base blind ({Math.round((configuration.width?.cm || 0) * 10 + (configuration.width?.mm || 0))}mm × {Math.round((configuration.height?.cm || 0) * 10 + (configuration.height?.mm || 0))}mm)</span>
+                <span className="text-gray-600">Base blind ({configuration.width}mm × {configuration.height}mm)</span>
                 <span className="font-medium">${pricing.basePrice}</span>
               </div>
               {configuration.measurementGuarantee && (
