@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -146,16 +147,20 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
                 onClick={() => handleFabricSelect(fabric.id)}
               >
                 <CardContent className="p-3 text-center">
-                  <div className="w-full h-16 rounded mb-2 border overflow-hidden relative group bg-gray-50">
+                  <div className="w-full h-16 rounded mb-2 border overflow-hidden relative group bg-white">
                     <img
                       src={fabric.image}
                       alt={fabric.name}
-                      className="w-full h-full object-cover object-center filter antialiased"
+                      className="w-full h-full object-cover object-center"
                       style={{ 
-                        imageRendering: 'crisp-edges',
-                        WebkitFontSmoothing: 'antialiased'
+                        imageRendering: 'pixelated',
+                        msInterpolationMode: 'nearest-neighbor'
                       }}
-                      loading="lazy"
+                      onLoad={(e) => {
+                        // Ensure image displays properly once loaded
+                        const img = e.target as HTMLImageElement;
+                        img.style.imageRendering = 'auto';
+                      }}
                     />
                     <button
                       onClick={(e) => handleSwatchClick(fabric, e)}
@@ -193,3 +198,4 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
 };
 
 export default ColorStep;
+
