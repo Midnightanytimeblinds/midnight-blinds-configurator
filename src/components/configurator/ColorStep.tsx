@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -9,10 +8,10 @@ interface ColorStepProps {
 }
 
 const FRAME_COLORS = [
-  { id: 'black', name: 'Black', image: '/lovable-uploads/d8f3c2e9-1a4b-5c6d-7e8f-9g0h1i2j3k4l.png' },
-  { id: 'white', name: 'White', image: '/lovable-uploads/e9g4d3f0-2b5c-6d7e-8f9g-0h1i2j3k4l5m.png' },
-  { id: 'silver', name: 'Silver', image: '/lovable-uploads/f0h5e4g1-3c6d-7e8f-9g0h-1i2j3k4l5m6n.png' },
-  { id: 'cream', name: 'Cream', image: '/lovable-uploads/g1i6f5h2-4d7e-8f9g-0h1i-2j3k4l5m6n7o.png' },
+  { id: 'black', name: 'Black', image: '/lovable-uploads/ffd77d8d-0bd1-443f-9a80-9b76254c2223.png' },
+  { id: 'white', name: 'White', image: '/lovable-uploads/ffd77d8d-0bd1-443f-9a80-9b76254c2223.png' },
+  { id: 'silver', name: 'Silver', image: '/lovable-uploads/ffd77d8d-0bd1-443f-9a80-9b76254c2223.png' },
+  { id: 'cream', name: 'Cream', image: '/lovable-uploads/ffd77d8d-0bd1-443f-9a80-9b76254c2223.png' },
 ];
 
 const FABRIC_TYPES = [
