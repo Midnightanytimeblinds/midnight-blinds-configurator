@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -36,11 +35,16 @@ const FABRIC_COLORS = {
     { id: 'duo-champagne', name: 'Champagne', image: '/lovable-uploads/92df69be-6dd3-411a-90fb-a04bff82c61a.png' },
   ],
   'lereve-blockout': [
-    { id: 'lereve-black', name: 'Deep Black', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop' },
-    { id: 'lereve-charcoal', name: 'Charcoal', image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop' },
-    { id: 'lereve-dark-grey', name: 'Dark Grey', image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=300&fit=crop' },
-    { id: 'lereve-medium-grey', name: 'Medium Grey', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop' },
-    { id: 'lereve-light-grey', name: 'Light Grey', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop' },
+    { id: 'lereve-stone', name: 'Stone', image: '/lovable-uploads/1401966e-ac6e-4b62-89dd-89521614e71f.png' },
+    { id: 'lereve-sandstone', name: 'Sandstone', image: '/lovable-uploads/d2ec0047-7e20-4078-9b51-d343380240cd.png' },
+    { id: 'lereve-canvas', name: 'Canvas', image: '/lovable-uploads/a7958b9e-ee35-449b-9a0f-ed1368e4622a.png' },
+    { id: 'lereve-linen', name: 'Linen', image: '/lovable-uploads/53695bb3-4e06-4efa-9cff-36c093489242.png' },
+    { id: 'lereve-silver', name: 'Silver', image: '/lovable-uploads/6d11238f-055a-486a-bbc2-98f43871e801.png' },
+    { id: 'lereve-graphite', name: 'Graphite', image: '/lovable-uploads/46a861bd-9177-4988-9c88-74caf049ba7f.png' },
+    { id: 'lereve-charcoal', name: 'Charcoal', image: '/lovable-uploads/91246e39-2f12-4faf-bc47-c5ae07b1c8bc.png' },
+    { id: 'lereve-aztec', name: 'Aztec', image: '/lovable-uploads/c6b302f2-b480-45dd-b558-4046a4cf9042.png' },
+    { id: 'lereve-pearl', name: 'Pearl', image: '/lovable-uploads/73bd9dab-e540-47ff-8edd-d5f37af4bcfb.png' },
+    { id: 'lereve-champagne', name: 'Champagne', image: '/lovable-uploads/009f9855-a167-4078-8557-c6d4c1438e77.png' },
   ],
 };
 
