@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -21,11 +22,16 @@ const FABRIC_TYPES = [
 
 const FABRIC_COLORS = {
   'duo-blockout': [
-    { id: 'duo-black', name: 'Charcoal Black', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop' },
-    { id: 'duo-dark-grey', name: 'Dark Grey', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop' },
-    { id: 'duo-medium-grey', name: 'Medium Grey', image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop' },
-    { id: 'duo-light-grey', name: 'Light Grey', image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=300&fit=crop' },
-    { id: 'duo-cream', name: 'Cream', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop' },
+    { id: 'duo-aztec', name: 'Aztec', image: '/lovable-uploads/76e5cbb7-cc79-412b-b223-cd65e466e8f6.png' },
+    { id: 'duo-graphite', name: 'Graphite', image: '/lovable-uploads/7a78abd3-b3aa-456f-b396-8bdeadfb611a.png' },
+    { id: 'duo-linen', name: 'Linen', image: '/lovable-uploads/739df3c8-b03c-47c5-b248-edb703766ee4.png' },
+    { id: 'duo-charcoal', name: 'Charcoal', image: '/lovable-uploads/2d6c4dc5-5765-494c-832d-e5eda96ea806.png' },
+    { id: 'duo-stone', name: 'Stone', image: '/lovable-uploads/246960fd-7b4d-42df-86d9-04d77e6de010.png' },
+    { id: 'duo-silver', name: 'Silver', image: '/lovable-uploads/1b884d9e-541f-4e60-8f2b-142052a243d1.png' },
+    { id: 'duo-pearl', name: 'Pearl', image: '/lovable-uploads/020b87c0-cbee-43dc-a1a0-789f14918729.png' },
+    { id: 'duo-sandstone', name: 'Sandstone', image: '/lovable-uploads/9c7cfdc4-7d8b-4e55-aa94-0092793c1060.png' },
+    { id: 'duo-canvas', name: 'Canvas', image: '/lovable-uploads/e5517323-ef2f-41a4-8b48-70032f2dbe08.png' },
+    { id: 'duo-champagne', name: 'Champagne', image: '/lovable-uploads/92df69be-6dd3-411a-90fb-a04bff82c61a.png' },
   ],
   'lereve-blockout': [
     { id: 'lereve-black', name: 'Deep Black', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop' },
