@@ -67,6 +67,7 @@ const ProductConfigurator = () => {
   };
 
   const updateConfiguration = (updates: Partial<Configuration>) => {
+    console.log('Configuration update:', updates);
     setConfiguration(prev => ({ ...prev, ...updates }));
   };
 
@@ -126,6 +127,36 @@ const ProductConfigurator = () => {
 
   const CurrentStepComponent = visibleSteps.find(step => step.id === currentStep)?.component;
   const isLastStep = currentStepIndex === visibleSteps.length - 1;
+
+  // Get fabric color details for display
+  const getFabricColorDetails = () => {
+    if (!configuration.fabricType || !configuration.fabricColor) return null;
+    
+    const FABRIC_COLORS = {
+      'duo-blockout': [
+        { id: 'duo-aztec', name: 'Aztec', image: '/lovable-uploads/76e5cbb7-cc79-412b-b223-cd65e466e8f6.png' },
+        { id: 'duo-graphite', name: 'Graphite', image: '/lovable-uploads/7a78abd3-b3aa-456f-b396-8bdeadfb611a.png' },
+        { id: 'duo-linen', name: 'Linen', image: '/lovable-uploads/739df3c8-b03c-47c5-b248-edb703766ee4.png' },
+        { id: 'duo-charcoal', name: 'Charcoal', image: '/lovable-uploads/2d6c4dc5-5765-494c-832d-e5eda96ea806.png' },
+        { id: 'duo-stone', name: 'Stone', image: '/lovable-uploads/246960fd-7b4d-42df-86d9-04d77e6de010.png' },
+        { id: 'duo-silver', name: 'Silver', image: '/lovable-uploads/1b884d9e-541f-4e60-8f2b-142052a243d1.png' },
+        { id: 'duo-pearl', name: 'Pearl', image: '/lovable-uploads/020b87c0-cbee-43dc-a1a0-789f14918729.png' },
+        { id: 'duo-sandstone', name: 'Sandstone', image: '/lovable-uploads/9c7cfdc4-7d8b-4e55-aa94-0092793c1060.png' },
+        { id: 'duo-canvas', name: 'Canvas', image: '/lovable-uploads/e5517323-ef2f-41a4-8b48-70032f2dbe08.png' },
+        { id: 'duo-champagne', name: 'Champagne', image: '/lovable-uploads/92df69be-6dd3-411a-90fb-a04bff82c61a.png' },
+      ],
+      'lereve-blockout': [
+        { id: 'lereve-black', name: 'Deep Black', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop' },
+        { id: 'lereve-charcoal', name: 'Charcoal', image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop' },
+        { id: 'lereve-dark-grey', name: 'Dark Grey', image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=300&fit=crop' },
+        { id: 'lereve-medium-grey', name: 'Medium Grey', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop' },
+        { id: 'lereve-light-grey', name: 'Light Grey', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop' },
+      ],
+    };
+
+    const fabricColors = FABRIC_COLORS[configuration.fabricType as keyof typeof FABRIC_COLORS];
+    return fabricColors?.find(color => color.id === configuration.fabricColor);
+  };
 
   return (
     <div className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -231,19 +262,34 @@ const ProductConfigurator = () => {
                       <span className="text-xs text-gray-600 font-medium">Frame</span>
                     </div>
                   )}
-                  {configuration.fabricType && configuration.fabricColor && (
-                    <div className="text-center flex-1">
-                      <div className="w-16 h-10 rounded border mx-auto mb-2 shadow-sm" style={{
-                        backgroundColor: configuration.fabricColor.includes('white') ? '#FFFFFF' :
-                                       configuration.fabricColor.includes('black') ? '#000000' :
-                                       configuration.fabricColor.includes('grey') ? '#808080' :
-                                       configuration.fabricColor.includes('cream') ? '#F5F5DC' :
-                                       configuration.fabricColor.includes('blue') ? '#2C3E50' : '#D1D5DB',
-                        borderColor: configuration.fabricColor.includes('white') ? '#E5E7EB' : 'transparent'
-                      }} />
-                      <span className="text-xs text-gray-600 font-medium">{configuration.fabricType}</span>
-                    </div>
-                  )}
+                  {configuration.fabricType && configuration.fabricColor && (() => {
+                    const fabricDetails = getFabricColorDetails();
+                    return (
+                      <div className="text-center flex-1">
+                        <div className="w-16 h-10 rounded border mx-auto mb-2 shadow-sm overflow-hidden">
+                          {fabricDetails ? (
+                            <img 
+                              src={fabricDetails.image} 
+                              alt={fabricDetails.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div style={{
+                              backgroundColor: configuration.fabricColor.includes('white') ? '#FFFFFF' :
+                                             configuration.fabricColor.includes('black') ? '#000000' :
+                                             configuration.fabricColor.includes('grey') ? '#808080' :
+                                             configuration.fabricColor.includes('cream') ? '#F5F5DC' :
+                                             configuration.fabricColor.includes('blue') ? '#2C3E50' : '#D1D5DB',
+                              borderColor: configuration.fabricColor.includes('white') ? '#E5E7EB' : 'transparent'
+                            }} className="w-full h-full" />
+                          )}
+                        </div>
+                        <span className="text-xs text-gray-600 font-medium">
+                          {getFabricColorDetails()?.name || configuration.fabricType}
+                        </span>
+                      </div>
+                    );
+                  })()}
                 </div>
               </div>
             )}
