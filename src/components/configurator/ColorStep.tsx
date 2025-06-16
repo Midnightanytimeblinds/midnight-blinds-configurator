@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -145,11 +146,16 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
                 onClick={() => handleFabricSelect(fabric.id)}
               >
                 <CardContent className="p-3 text-center">
-                  <div className="w-full h-16 rounded mb-2 border overflow-hidden relative group">
+                  <div className="w-full h-16 rounded mb-2 border overflow-hidden relative group bg-gray-50">
                     <img
                       src={fabric.image}
                       alt={fabric.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-center filter antialiased"
+                      style={{ 
+                        imageRendering: 'crisp-edges',
+                        WebkitFontSmoothing: 'antialiased'
+                      }}
+                      loading="lazy"
                     />
                     <button
                       onClick={(e) => handleSwatchClick(fabric, e)}
