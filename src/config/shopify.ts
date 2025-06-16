@@ -3,15 +3,21 @@
 // These values need to be set when integrating with your Shopify store
 
 export interface ShopifyConfig {
-  customBlindVariantId: string;
+  customBlindProductId: string;
+  customBlindVariantId: string; // Keep for fallback
   remoteProductVariantId: string;
   smartHubProductVariantId: string;
   productPageUrl: string;
+  appBaseUrl: string; // URL of your Shopify app for dynamic variants
+  appApiKey: string; // API key for your app
 }
 
 // Default configuration - update these in production
 export const shopifyConfig: ShopifyConfig = {
-  // Main custom blind product variant ID
+  // Main custom blind product ID (not variant ID)
+  customBlindProductId: '1234567890123',
+  
+  // Fallback variant ID (base variant)
   customBlindVariantId: '12345678901234',
   
   // Remote control product variant ID
@@ -22,6 +28,12 @@ export const shopifyConfig: ShopifyConfig = {
   
   // Product page URL to navigate back to
   productPageUrl: '/products/custom-blackout-blind',
+  
+  // Your Shopify app base URL for dynamic variant creation
+  appBaseUrl: 'https://your-app.herokuapp.com',
+  
+  // API key for your Shopify app
+  appApiKey: 'your-app-api-key',
 };
 
 // Function to update configuration from window object (for production)
