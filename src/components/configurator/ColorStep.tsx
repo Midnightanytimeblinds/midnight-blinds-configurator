@@ -9,10 +9,10 @@ interface ColorStepProps {
 }
 
 const FRAME_COLORS = [
-  { id: 'white', name: 'White', color: '#FFFFFF', border: '#E5E7EB' },
-  { id: 'black', name: 'Black', color: '#000000' },
-  { id: 'silver', name: 'Silver', color: '#C0C0C0' },
-  { id: 'bronze', name: 'Bronze', color: '#CD7F32' },
+  { id: 'black', name: 'Black', image: '/lovable-uploads/d8f3c2e9-1a4b-5c6d-7e8f-9g0h1i2j3k4l.png' },
+  { id: 'white', name: 'White', image: '/lovable-uploads/e9g4d3f0-2b5c-6d7e-8f9g-0h1i2j3k4l5m.png' },
+  { id: 'silver', name: 'Silver', image: '/lovable-uploads/f0h5e4g1-3c6d-7e8f-9g0h-1i2j3k4l5m6n.png' },
+  { id: 'cream', name: 'Cream', image: '/lovable-uploads/g1i6f5h2-4d7e-8f9g-0h1i-2j3k4l5m6n7o.png' },
 ];
 
 const FABRIC_TYPES = [
@@ -22,18 +22,18 @@ const FABRIC_TYPES = [
 
 const FABRIC_COLORS = {
   'duo-blockout': [
-    { id: 'duo-black', name: 'Charcoal Black', image: '/lovable-uploads/e8f5b3d8-5a8e-4b7a-9c2d-1e3f4a5b6c7d.png' },
-    { id: 'duo-dark-grey', name: 'Dark Grey', image: '/lovable-uploads/f9a6c4e9-6b9f-5c8a-ad3e-2f4g5h6i7j8k.png' },
-    { id: 'duo-medium-grey', name: 'Medium Grey', image: '/lovable-uploads/a1b2c3d4-7c0d-6d9b-be4f-3g5h6i7j8k9l.png' },
-    { id: 'duo-light-grey', name: 'Light Grey', image: '/lovable-uploads/b2c3d4e5-8d1e-7e0c-cf5g-4h6i7j8k9l0m.png' },
-    { id: 'duo-cream', name: 'Cream', image: '/lovable-uploads/c3d4e5f6-9e2f-8f1d-dg6h-5i7j8k9l0m1n.png' },
+    { id: 'duo-black', name: 'Charcoal Black', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop' },
+    { id: 'duo-dark-grey', name: 'Dark Grey', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop' },
+    { id: 'duo-medium-grey', name: 'Medium Grey', image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop' },
+    { id: 'duo-light-grey', name: 'Light Grey', image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=300&fit=crop' },
+    { id: 'duo-cream', name: 'Cream', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop' },
   ],
   'lereve-blockout': [
-    { id: 'lereve-black', name: 'Deep Black', image: '/lovable-uploads/d4e5f6g7-0f3g-9g2e-eh7i-6j8k9l0m1n2o.png' },
-    { id: 'lereve-charcoal', name: 'Charcoal', image: '/lovable-uploads/e5f6g7h8-1g4h-0h3f-fi8j-7k9l0m1n2o3p.png' },
-    { id: 'lereve-dark-grey', name: 'Dark Grey', image: '/lovable-uploads/f6g7h8i9-2h5i-1i4g-gj9k-8l0m1n2o3p4q.png' },
-    { id: 'lereve-medium-grey', name: 'Medium Grey', image: '/lovable-uploads/g7h8i9j0-3i6j-2j5h-hk0l-9m1n2o3p4q5r.png' },
-    { id: 'lereve-light-grey', name: 'Light Grey', image: '/lovable-uploads/h8i9j0k1-4j7k-3k6i-il1m-0n2o3p4q5r6s.png' },
+    { id: 'lereve-black', name: 'Deep Black', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop' },
+    { id: 'lereve-charcoal', name: 'Charcoal', image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop' },
+    { id: 'lereve-dark-grey', name: 'Dark Grey', image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=300&fit=crop' },
+    { id: 'lereve-medium-grey', name: 'Medium Grey', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop' },
+    { id: 'lereve-light-grey', name: 'Light Grey', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop' },
   ],
 };
 
@@ -64,13 +64,13 @@ const ColorStep = ({ configuration, updateConfiguration }: ColorStepProps) => {
               onClick={() => updateConfiguration({ frameColor: color.id })}
             >
               <CardContent className="p-4 text-center">
-                <div
-                  className="w-12 h-12 rounded-full mx-auto mb-2 border-2"
-                  style={{
-                    backgroundColor: color.color,
-                    borderColor: color.border || color.color,
-                  }}
-                />
+                <div className="w-12 h-12 rounded mx-auto mb-2 border overflow-hidden">
+                  <img
+                    src={color.image}
+                    alt={color.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <span className="text-sm font-medium">{color.name}</span>
               </CardContent>
             </Card>
