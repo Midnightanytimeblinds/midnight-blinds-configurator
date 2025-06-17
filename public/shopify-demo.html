@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopify Product Page Demo</title>
+    <meta property="og:title" content="Custom Blackout Blind">
+    <meta property="og:image" content="/lovable-uploads/268e67c9-4759-42ed-9624-5684dab2d584.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product-info h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .price {
+            font-size: 1.5rem;
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .product-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .product-form__buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #333;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #555;
+        }
+        .demo-note {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 30px;
+            color: #1565c0;
+        }
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-note">
+        <strong>Demo:</strong> This simulates a Shopify product page. Click "Customize Your Blind" to see the popup configurator in action.
+    </div>
+
+    <div class="product-container">
+        <div class="product-images">
+            <img src="/lovable-uploads/268e67c9-4759-42ed-9624-5684dab2d584.png" 
+                 alt="Custom Blackout Blind" 
+                 class="product-image">
+        </div>
+        
+        <div class="product-info">
+            <h1>Custom Blackout Blind</h1>
+            <div class="price">From $560.00</div>
+            
+            <div class="product-description">
+                <p>Create your perfect custom blind with our easy-to-use configurator. Choose from premium fabrics, frame colors, and motorised options for the ultimate window treatment.</p>
+                
+                <ul>
+                    <li>Premium blockout fabrics</li>
+                    <li>Multiple frame color options</li>
+                    <li>Motorised operation with remote</li>
+                    <li>Professional measurement guarantee available</li>
+                    <li>Smart home integration options</li>
+                </ul>
+            </div>
+            
+            <div class="product-form__buttons">
+                <button class="btn btn-primary" type="button">
+                    Add to Cart - $560.00
+                </button>
+                
+                <!-- The configurator button will be inserted here by the embed script -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopify product data simulation -->
+    <script>
+        window.ShopifyAnalytics = {
+            meta: {
+                product: {
+                    id: '1234567890123',
+                    title: 'Custom Blackout Blind',
+                    price: 560.00
+                }
+            }
+        };
+    </script>
+
+    <!-- Update this URL to your deployed Lovable app URL -->
+    <script>
+        // For demo purposes, we'll use the current origin
+        const CONFIGURATOR_URL = window.location.origin;
+        
+        // Include the embed script inline for demo
+        (function() {
+            const script = document.createElement('script');
+            script.src = '/shopify-embed.js';
+            document.head.appendChild(script);
+        })();
+    </script>
+</body>
+</html>

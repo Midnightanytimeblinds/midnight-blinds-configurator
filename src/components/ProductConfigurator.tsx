@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -56,14 +57,39 @@ const ProductConfigurator = () => {
   });
   const [pricing, setPricing] = useState(calculatePrice(configuration));
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [isPopupMode, setIsPopupMode] = useState(false);
+  const [productData, setProductData] = useState<any>(null);
+
+  // Check if running in popup mode
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const popup = urlParams.get('popup');
+    const product = urlParams.get('product');
+    
+    if (popup === 'true') {
+      setIsPopupMode(true);
+      if (product) {
+        try {
+          setProductData(JSON.parse(decodeURIComponent(product)));
+        } catch (e) {
+          console.error('Error parsing product data:', e);
+        }
+      }
+    }
+  }, []);
 
   useEffect(() => {
     setPricing(calculatePrice(configuration));
   }, [configuration]);
 
   const handleBackToProduct = () => {
-    // Navigate back to Shopify product page using configured URL
-    window.location.href = shopifyConfig.productPageUrl;
+    if (isPopupMode) {
+      // Send message to parent window to close popup
+      window.parent.postMessage({ type: 'close-configurator' }, '*');
+    } else {
+      // Navigate back to Shopify product page using configured URL
+      window.location.href = shopifyConfig.productPageUrl;
+    }
   };
 
   const updateConfiguration = (updates: Partial<Configuration>) => {
@@ -113,10 +139,18 @@ const ProductConfigurator = () => {
     setIsAddingToCart(true);
     
     try {
-      await addToShopifyCart(configuration, pricing);
-      
-      // Redirect to cart page after successful addition
-      window.location.href = '/cart';
+      if (isPopupMode) {
+        // Send configuration data to parent window for Shopify app processing
+        window.parent.postMessage({
+          type: 'add-to-cart',
+          configuration: configuration,
+          pricing: pricing
+        }, '*');
+      } else {
+        // Use existing cart logic for standalone mode
+        await addToShopifyCart(configuration, pricing);
+        window.location.href = '/cart';
+      }
     } catch (error) {
       console.error('Error adding to cart:', error);
       alert('There was an error adding your blind to the cart. Please try again.');
@@ -171,7 +205,7 @@ const ProductConfigurator = () => {
               className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 p-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              <span>Back to Product</span>
+              <span>{isPopupMode ? 'Close' : 'Back to Product'}</span>
             </Button>
           </div>
 
